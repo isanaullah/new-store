@@ -35,6 +35,6 @@ class BlogCategory extends Model
    */
   public function articles()
   {
-    return $this->hasMany(BlogArticle::class);
+    return $this->hasMany(BlogArticle::class, 'category_id', 'id');
   }
 }

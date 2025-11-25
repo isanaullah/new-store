@@ -9,7 +9,10 @@ use App\Models\User;
 use App\Models\Faqs;
 use App\Models\WebSetting;
 use App\Models\BlogArticle;
+use App\Models\Category;
+use App\Models\Article;
 use App\Models\BlogCategory;
+use App\Models\Product;
 use Illuminate\Http\Request;
 //For Schema
 use Spatie\SchemaOrg\Schema;
@@ -27,7 +30,34 @@ class FrontendController extends Controller
     public function index()
     {
         $page = Page::where('slug', 'home')->first();
-        return view("website.index", compact('page'));
+        $categories = Category::where('status', 1)->get();
+        $products = Product::paginate(8);
+        $setting = WebSetting::first();
+        $blogs = BlogArticle::where('status', 1)->orderBy('created_at', 'desc')->take(3)->get();
+        return view("website.index", compact('page', 'categories', 'products', 'blogs', 'setting'));
+    }
+
+    /**
+     * Load more products via AJAX
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loadMoreProducts(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $products = Product::paginate(8, ['*'], 'page', $page);
+
+        $html = '';
+        foreach ($products as $product) {
+            $html .= view('partials.product-card', compact('product'))->render();
+        }
+
+        return response()->json([
+            'html' => $html,
+            'has_more' => $products->hasMorePages(),
+            'next_page' => $products->currentPage() + 1,
+        ]);
     }
 
     /**
@@ -38,19 +68,104 @@ class FrontendController extends Controller
      */
     public function productShow($slug)
     {
-        $page = Page::where('slug', $slug)->first();
-        return view("website.product-show", compact('page'));
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('status', 1)
+            ->take(3)
+            ->get();
+
+        return view("website.product-show", compact('product', 'relatedProducts'));
     }
 
     /**
      * Display the product listing page.
      *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function productListing()
+    public function productListing(Request $request)
     {
         $page = Page::where('slug', 'product-listing')->first();
-        return view("website.products-listing", compact('page'));
+        $setting = WebSetting::first();
+
+        // Build query
+        $query = Product::where('status', 1);
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->get('category'));
+        }
+
+        // Filter by price range
+        if ($request->filled('min_price') && $request->filled('max_price')) {
+            $minPrice = $request->get('min_price');
+            $maxPrice = $request->get('max_price');
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+        }
+
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Sort
+        $sortBy = $request->get('sort', 'featured');
+        switch ($sortBy) {
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'title_asc':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'title_desc':
+                $query->orderBy('title', 'desc');
+                break;
+            default:
+                $query->orderBy('id', 'desc');
+        }
+
+        // Paginate
+        $products = $query->paginate(12)->appends($request->query());
+
+        // Get categories for filter
+        $categories = Category::where('status', 1)->get();
+
+        // SEO Meta Info
+        $meta_title = $page->page_name ?? "Shop - Products";
+        $meta_desc = $page->meta_desc ?? "Browse our collection of quality products.";
+
+        SEOTools::setDescription($meta_desc);
+        SEOTools::setCanonical(url()->current());
+
+        // Open Graph
+        SEOTools::opengraph()->setTitle($meta_title);
+        SEOTools::opengraph()->setDescription($meta_desc);
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addImage(asset('storage/' . ($page->image ?? 'default.png')));
+        SEOTools::opengraph()->addProperty('type', 'website');
+
+        // Twitter Card
+        SEOTools::twitter()->setTitle($meta_title);
+        SEOTools::twitter()->setDescription($meta_desc);
+        SEOTools::twitter()->setUrl(url()->current());
+        SEOTools::twitter()->setImage(asset('storage/' . ($page->image ?? 'default.png')));
+        SEOTools::twitter()->setType('summary_large_image');
+
+        return view("website.products-listing", compact('page', 'products', 'categories', 'setting'));
     }
 
     /**
@@ -90,7 +205,7 @@ class FrontendController extends Controller
      * @param  string|null  $categorySlug
      * @return \Illuminate\View\View
      */
-    public function bloglist(Request $request, $categorySlug = null)
+    public function bloglisting(Request $request, $categorySlug = null)
     {
         $page      = Page::where('slug', 'blog-listing')->first();
         $setting   = WebSetting::first();
@@ -117,7 +232,7 @@ class FrontendController extends Controller
                 ->first();
 
             if ($category) {
-                $query->where('blog_category_id', $category->id);
+                $query->where('category_id', $category->id);
             } else {
                 // If category slug is present but not found, we should show no blogs.
             }
@@ -134,8 +249,11 @@ class FrontendController extends Controller
         }
 
         $tags        = Tag::all();
-        $categories  = BlogCategory::orderby('views_count', 'desc')->take(7)->get();
+        $categories  = BlogCategory::withCount(['articles' => function ($q) {
+            $q->where('status', 1);
+        }])->orderby('views_count', 'desc')->take(7)->get();
         $recentposts = BlogArticle::orderby('created_at', 'desc')->take(4)->get();
+        $setting     = WebSetting::first();
 
         $meta_title = $page->page_name ?? "Latest Blog Articles - EstateGuideBlog";
         $meta_desc  = $page->meta_desc ?? "Browse fresh articles on real estate, finance, health, and more. Updated weekly on EstateGuideBlog.";
@@ -172,7 +290,7 @@ class FrontendController extends Controller
             $schema['itemListElement'][] = array_filter([
                 "@type"       => "ListItem",
                 "position"    => $index + 1,
-                "url"         => route('blogshow', $blog->slug),
+                "url"         => route('blog.show', $blog->slug),
                 "name"        => $blog->title,
                 "description" => $blog->meta_desc ?? $blog->description,
                 "image"       => $blog->image ? asset('storage/' . $blog->image) : null,
@@ -212,7 +330,7 @@ class FrontendController extends Controller
                     "@type"    => "ListItem",
                     "position" => 2,
                     "name"     => "Blog",
-                    "item"     => route('bloglist'),
+                    "item"     => route('blog.listing'),
                 ],
             ],
         ];
@@ -222,7 +340,7 @@ class FrontendController extends Controller
                 "@type"    => "ListItem",
                 "position" => 3,
                 "name"     => $category->title,
-                "item"     => route('bloglist', $category->slug),
+                "item"     => route('blog.listing', $category->slug),
             ];
         }
 
@@ -236,7 +354,8 @@ class FrontendController extends Controller
             'recentposts',
             'tags',
             'schemaMarkup',
-            'breadcrumbsMarkup'
+            'breadcrumbsMarkup',
+            'category'
         ));
     }
 
@@ -253,110 +372,154 @@ class FrontendController extends Controller
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function blogshow(BlogArticle $articleArticle, $slug)
-    {
-        $setting      = WebSetting::first();
-        $article      = BlogArticle::where('slug', $slug)->firstOrFail();
-        $page         = ['page_name' => $article->page_title];
-        $meta_title   = $article->title ?? "Welcome to Our Main article";
-        $meta_desc    = $article->meta_desc ?? "Description of the main article";
-        $instructor   = User::find($article->author_id);
-        $site_name    = config('seotools.opengraph.defaults.site_name', config('app.name'));
-        $tags         = Tag::all();
-        $categories   = BlogCategory::orderby('views_count', 'desc')->where('status', '1')->take(7)->get();
-        $recentposts  = BlogArticle::orderby('updated_at', 'desc')->where('status', '1')->take(4)->get();
-        $popularposts = BlogArticle::with('category')->where('status', '1')
-            ->where('id', '!=', $article->id)
-            ->orderBy('views_count', 'desc')
-            ->take(3)
-            ->get();
+public function blogshow(BlogArticle $articleArticle, $slug)
+{
+    $setting = WebSetting::first();
+    $article = BlogArticle::where('slug', $slug)->firstOrFail();
 
-        // SEO Meta and Open Graph
-        SEOTools::setDescription($meta_desc);
-        SEOTools::setCanonical(url()->current());
+    $page = ['page_name' => $article->page_title];
+    $meta_title = $article->title ?? "Welcome to Our Main article";
+    $meta_desc = $article->meta_desc ?? "Description of the main article";
+    $instructor = User::find($article->author_id);
+    $site_name = config('seotools.opengraph.defaults.site_name', config('app.name'));
+    // $tags = Tags::all();
+    $categories = BlogCategory::withCount(['articles' => function ($q) {
+        $q->where('status', 1);
+    }])->orderby('views_count', 'desc')->where('status','1')->take(7)->get();
+    $recentposts = BlogArticle::orderby('updated_at', 'desc')->where('status','1')->take(3)->get();
 
-        SEOTools::opengraph()->setTitle($meta_title);
-        SEOTools::opengraph()->setDescription($meta_desc);
-        SEOTools::opengraph()->setUrl(url()->current());
-        SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->addImage(asset('storage/' . ($article->image ?? 'default.png')));
+    // $comments = $article->comments()
+    //     ->whereNull('parent_id')
+    //     ->where('is_approved', true)
+    //     ->with(['replies' => function ($query) {
+    //         $query->where('is_approved', true);
+    //     }])
+    //     ->get();
 
-        SEOTools::twitter()->setTitle($meta_title);
-        SEOTools::twitter()->setDescription($meta_desc);
-        SEOTools::twitter()->setImage(asset('storage/' . ($article->image ?? 'default.png')));
-        SEOTools::twitter()->setUrl(url()->current());
-        SEOTools::twitter()->setSite('@YourTwitterHandle');
-        SEOTools::twitter()->setType('summary_large_image');
+    // Get related posts from same category
+    $relatedPosts = BlogArticle::where('category_id', $article->category_id)
+      ->where('id', '!=', $article->id)
+      ->where('status', 1)
+      ->with(['category', 'author'])
+      ->latest()
+      ->take(3)
+      ->get();
 
-        // Article Schema JSON-LD
-        $schemaData = [
-            "@context"         => "https://schema.org",
-            "@type"            => "NewsArticle",
-            "headline"         => $article->title,
-            "description"      => $meta_desc,
-            "mainEntityOfPage" => [
-                "@type" => "WebPage",
-                "@id"   => url()->current(),
+    // ------------------------------
+    // ✅ SEO Meta and Open Graph
+    // ------------------------------
+    // SEOTools::setTitle($meta_title);
+    SEOTools::setDescription($meta_desc);
+    SEOTools::setCanonical(url()->current());
+
+    SEOTools::opengraph()->setTitle($meta_title);
+    SEOTools::opengraph()->setDescription($meta_desc);
+    SEOTools::opengraph()->setUrl(url()->current());
+    SEOTools::opengraph()->addProperty('type', 'article');
+    SEOTools::opengraph()->addImage(asset('storage/' . ($article->image ?? 'default.png')));
+
+    SEOTools::twitter()->setTitle($meta_title);
+    SEOTools::twitter()->setDescription($meta_desc);
+    SEOTools::twitter()->setImage(asset('storage/' . ($article->image ?? 'default.png')));
+    SEOTools::twitter()->setUrl(url()->current());
+    SEOTools::twitter()->setSite('@YourTwitterHandle'); // Replace with real handle
+    SEOTools::twitter()->setType('summary_large_image');
+
+    // ------------------------------
+    // ✅ Article Schema JSON-LD
+    // ------------------------------
+    $schemaData = [
+        "@context" => "https://schema.org",
+        "@type" => "NewsArticle", // ✅ More specific than Article
+        "headline" => $article->title,
+        "description" => $meta_desc,
+        "mainEntityOfPage" => [
+            "@type" => "WebPage",
+            "@id" => url()->current()
+        ],
+        "url" => url()->current(),
+        "image" => asset('storage/' . ($article->image ?? 'default.png')),
+        "datePublished" => $article->created_at->toIso8601String(),
+        "dateModified" => $article->updated_at->toIso8601String(),
+        "articleBody" => strip_tags($article->description), // ✅ Add full body text
+        "author" => [
+            "@type" => "Person",
+            "name" => $instructor->name ?? 'Admin',
+            // "sameAs" => [
+            //     $instructor->twitter ? "https://twitter.com/{$instructor->twitter}" : null,
+            //     $instructor->insta ? "https://instagram.com/{$instructor->insta}" : null,
+            //     // Add more social links if available
+            // ]
+        ],
+        "publisher" => [
+            "@type" => "Organization",
+            "@id" => route('home') . '#organization', // ✅ Added @id
+            "name" => $site_name,
+            "logo" => [
+                "@type" => "ImageObject",
+                "url" => asset('storage/settings/' . ($setting->site_logo ?? 'default.png'))
+            ]
+        ],
+        "articleSection" => $article->category->name ?? "Blog",
+    ];
+
+    // Remove null values (for example, missing social URLs)
+    // $schemaData['author']['sameAs'] = array_values(array_filter($schemaData['author']['sameAs']));
+
+    $schemaMarkup = json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+    // ------------------------------
+    // ✅ Breadcrumb Schema JSON-LD
+    // ------------------------------
+    $breadcrumbs = [
+        "@context" => "https://schema.org",
+        "@type" => "BreadcrumbList",
+        "itemListElement" => [
+            [
+                "@type" => "ListItem",
+                "position" => 1,
+                "name" => "Home",
+                "item" => route('home')
             ],
-            "url"              => url()->current(),
-            "image"            => asset('storage/' . ($article->image ?? 'default.png')),
-            "datePublished"    => $article->created_at->toIso8601String(),
-            "dateModified"     => $article->updated_at->toIso8601String(),
-            "articleBody"      => strip_tags($article->description),
-            "author"           => [
-                "@type" => "Person",
-                "name"  => $instructor->name ?? 'Admin',
+            [
+                "@type" => "ListItem",
+                "position" => 2,
+                "name" => "Blog",
+                "item" => route('blog.listing')
             ],
-            "publisher"        => [
-                "@type" => "Organization",
-                "@id"   => route('home') . '#organization',
-                "name"  => $site_name,
-                "logo"  => [
-                    "@type" => "ImageObject",
-                    "url"   => asset('storage/settings/' . ($setting->site_logo ?? 'default.png')),
-                ],
-            ],
-            "articleSection"   => $article->category->name ?? "Blog",
-        ];
+            [
+                "@type" => "ListItem",
+                "position" => 3,
+                "name" => $article->title,
+                "item" => url()->current()
+            ]
+        ]
+    ];
 
-        $schemaMarkup = json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    $breadcrumbsMarkup = json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
-        // Breadcrumb Schema JSON-LD
-        $breadcrumbs = [
-            "@context"        => "https://schema.org",
-            "@type"           => "BreadcrumbList",
-            "itemListElement" => [
-                [
-                    "@type"    => "ListItem",
-                    "position" => 1,
-                    "name"     => "Home",
-                    "item"     => route('home'),
-                ],
-                [
-                    "@type"    => "ListItem",
-                    "position" => 2,
-                    "name"     => "Blog",
-                    "item"     => route('bloglist'),
-                ],
-                [
-                    "@type"    => "ListItem",
-                    "position" => 3,
-                    "name"     => $article->title,
-                    "item"     => url()->current(),
-                ],
-            ],
-        ];
+    // Get active blog detail page ads
+    // $adsAfterFirstParagraph = HomeAd::getActiveAdsByPosition('blog_detail_after_first_paragraph');
+    // $adsMiddleContent = HomeAd::getActiveAdsByPosition('blog_detail_middle_content');
+    // $adsBeforeLast2Tags = HomeAd::getActiveAdsByPosition('blog_detail_before_last_2_tags');
 
-        $breadcrumbsMarkup = json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-
-        return view("website.blog-details", compact(
-            'instructor',
-            'page',));
-
-        $schemaMarkup = json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-
-        return view('website.about-us', compact('page', 'setting', 'schemaMarkup'));
-    }
+    return view("website.blog-show", compact(
+        'instructor',
+        'page',
+        'relatedPosts',
+        'setting',
+        'article',
+        // 'tags',
+        'categories',
+        'recentposts',
+        // 'comments',
+        'schemaMarkup',
+        'breadcrumbsMarkup',
+        // 'adsAfterFirstParagraph',
+        // 'adsMiddleContent',
+        // 'adsBeforeLast2Tags'
+    ));
+}
 
     /*
 |--------------------------------------------------------------------------

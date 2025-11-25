@@ -30,6 +30,7 @@ class CreateWebSettingsTable extends Migration
         $table->string('site_url');
         $table->string('site_fav');
         $table->string('site_author');
+        $table->string('site_author_description');
         $table->text('theme_footer');
         $table->tinyInteger('status');
         $table->timestamps();

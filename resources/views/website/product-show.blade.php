@@ -8,8 +8,9 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <ul class="shop-details-menu d-flex align-items-center position-relativet-4">
-                                <li><a href="index.html" class="font-josefin">Home</a></li>
-                                <li class="active font-josefin">Shop Details</li>
+                                <li><a href="{{ route('home') }}" class="font-josefin">Home</a></li>
+                                <li><a href="{{ route('product.listing') }}" class="font-josefin">Products</a></li>
+                                <li class="active font-josefin">{{ $product->title }}</li>
                             </ul>
                         </div>
                     </div>
@@ -27,7 +28,17 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-1.png" alt="">
+                                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->title }}">
+                                            @if ($product->sale_price && $product->price > 0)
+                                                <span class="badge font-roboto">-{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%</span>
+                                            @endif
+                                            <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="single-item">
+                                        <div
+                                            class="d-flex position-relative ph400 justify-content-center align-items-center">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-2.png')}}" alt="">
                                             <span class="badge font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -35,15 +46,7 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-2.png" alt="">
-                                            <span class="badge font-roboto">-20%</span>
-                                            <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="single-item">
-                                        <div
-                                            class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-3.png" alt="">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-3.png')}}" alt="">
                                             <span class="badge bgBlack font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -51,7 +54,7 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-4.png" alt="">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-4.png')}}" alt="">
                                             <span class="badge font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -59,7 +62,7 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-5.png" alt="">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-5.png')}}" alt="">
                                             <span class="badge bgBlack font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -67,7 +70,7 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-6.png" alt="">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-6.png')}}" alt="">
                                             <span class="badge font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -75,7 +78,7 @@
                                     <div class="single-item">
                                         <div
                                             class="d-flex position-relative ph400 justify-content-center align-items-center">
-                                            <img src="{{asset('assets/frontend/images/home-6/products-7.png" alt="">
+                                            <img src="{{asset('assets/frontend/images/home-6/products-7.png')}}" alt="">
                                             <span class="badge bgBlack font-roboto">-20%</span>
                                             <a href="#0" class="plove"> <i class="flaticon-heart"></i></a>
                                         </div>
@@ -85,37 +88,37 @@
                                     <div class="singleProductThreeNav globalarrow smallarrow roundarrow slider-nav">
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-1.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-1.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-2.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-2.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-3.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-3.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-4.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-4.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-5.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-5.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-6.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-6.png')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="single-item ms-1 me-1">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-7.png" alt="">
+                                                <img src="{{asset('assets/frontend/images/home-6/products-7.png')}}" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -124,33 +127,41 @@
                         </div>
                         <div class="col-xl-7 col-lg-6 mt-30 wow fadeInUp animated">
                             <div class="product-details-content position-relative">
-                                <h4 class="font-josefin font-36">Nike Sport Sneakers</h4>
+                                <h4 class="font-josefin font-36">{{ $product->title }}</h4>
                                 <ul class="rating mt-2 pdrating align-items-center">
                                     <li> <i class="flaticon-star-1"></i> </li>
                                     <li> <i class="flaticon-star-1"></i> </li>
                                     <li> <i class="flaticon-star-1"></i> </li>
                                     <li> <i class="flaticon-star-1"></i> </li>
                                     <li> <i class="colorGray flaticon-star-1"></i> </li>
-                                    <li class="colorGray font-14 font-roboto mb--5 ms-2"> (2 Reviews)</li>
+                                    <li class="colorGray font-14 font-roboto mb--5 ms-2"> (0 Reviews)</li>
                                 </ul>
                                 <ul class="mt-2 pt-2 font-roboto">
-                                    <li class="font-14 colorBlack"> SKU: 25d5214</li>
-                                    <li class="font-14 colorBlack">VENDOR: Flemeno </li>
+                                    <li class="font-14 colorBlack"> SKU: {{ $product->sku ?? 'N/A' }}</li>
+                                    <li class="font-14 colorBlack">CATEGORY: {{ $product->category->name ?? 'N/A' }} </li>
                                 </ul>
                                 <div
                                     class="borderTop4 d-flex align-items-center justify-content-between flex-wrap mt-3 pt-3">
                                     <div>
                                         <div class="product-price pdStyle1 lh-1 d-flex align-items-center">
-                                            <span class="regular-price font-josefin font-18 me-2"> $90.00 </span>
-                                            <span class="compared-price colorBage1 font-36 font-josefin fw-500">
-                                                $50.00
-                                            </span>
+                                            @if ($product->sale_price)
+                                                <span class="regular-price font-josefin font-18 me-2" style="text-decoration: line-through;"> ${{ number_format($product->price, 2) }} </span>
+                                                <span class="compared-price colorBage1 font-36 font-josefin fw-500">
+                                                    ${{ number_format($product->sale_price, 2) }}
+                                                </span>
+                                            @else
+                                                <span class="compared-price colorBage1 font-36 font-josefin fw-500">
+                                                    ${{ number_format($product->price, 2) }}
+                                                </span>
+                                            @endif
                                         </div>
-                                        <span class="font-roboto font-14 ms-2">(+15% Vat Included) </span>
                                     </div>
                                     <a href="#0" class="share1 mt-2">
                                         <i class="flaticon-share-1"></i>
                                     </a>
+                                </div>
+                                <div class="mt-3 pt-3">
+                                    <p class="font-roboto">{{ $product->description }}</p>
                                 </div>
                                 <div
                                     class="borderTop4 d-flex align-items-center justify-content-between flex-wrap mt-3 pt-3">
@@ -159,17 +170,17 @@
                                         <ul class="product-switcher font-roboto style2 mt-2">
                                             <li>
                                                 <a href="#0" class="pswitch-item wh50 me-2">
-                                                    <img src="{{asset('assets/frontend/images/home-6/products-1.png" alt="img">
+                                                    <img src="{{asset('assets/frontend/images/home-6/products-1.png')}}" alt="img">
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#0" class="pswitch-item wh50 me-2 active">
-                                                    <img src="{{asset('assets/frontend/images/home-6/products-2.png" alt="img">
+                                                    <img src="{{asset('assets/frontend/images/home-6/products-2.png')}}" alt="img">
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#0" class="pswitch-item wh50">
-                                                    <img src="{{asset('assets/frontend/images/home-6/products-3.png" alt="img">
+                                                    <img src="{{asset('assets/frontend/images/home-6/products-3.png')}}" alt="img">
                                                 </a>
                                             </li>
                                         </ul>
@@ -701,17 +712,20 @@
                                     }
                                 ]}'>
 
+                                    @forelse($relatedProducts as $relatedProduct)
                                     <div class="product-item fitem">
                                         <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img class="normal-image" src="{{asset('assets/frontend/images/home-6/products-1.png"
-                                                    alt="product">
+                                            <a class="d-block" href="{{ route('product.show', $relatedProduct->slug) }}">
+                                                <img class="normal-image" src="{{ asset('storage/' . $relatedProduct->thumbnail) }}"
+                                                    alt="{{ $relatedProduct->title }}">
                                                 <img class="hover-image changeimage"
-                                                    src="{{asset('assets/frontend/images/home-6/products-7.png" alt="product">
+                                                    src="{{ asset('storage/' . $relatedProduct->thumbnail) }}" alt="{{ $relatedProduct->title }}">
                                             </a>
-                                            <span class="badge bgBage1 font-12 font-roboto radious50">
-                                                -30%
-                                            </span>
+                                            @if ($relatedProduct->sale_price && $relatedProduct->price > 0)
+                                                <span class="badge bgBage1 font-12 font-roboto radious50">
+                                                    -{{ round((($relatedProduct->price - $relatedProduct->sale_price) / $relatedProduct->price) * 100) }}%
+                                                </span>
+                                            @endif
                                             <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
                                                 <li class="product-button">
                                                     <a href="wishlist.html" class="buttonLInk radious50">
@@ -739,268 +753,34 @@
                                             </button>
                                         </div>
                                         <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
+                                            <p class="font-roboto font-12 fw-400">{{ $relatedProduct->category->name ?? 'Product' }}</p>
+                                            <a class="d-block pt-1" href="{{ route('product.show', $relatedProduct->slug) }}">
                                                 <h6 class="product-title font-josefin font-18 fw-600">
-                                                    Apex Sneakers
+                                                    {{ $relatedProduct->title }}
                                                 </h6>
                                             </a>
                                             <div
                                                 class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $159.00
-                                                </span>
+                                                @if ($relatedProduct->sale_price)
+                                                    <span class="compared-price colorBage1 font-14 font-josefin fw-500" style="text-decoration: line-through;">
+                                                        ${{ number_format($relatedProduct->price, 2) }}
+                                                    </span>
+                                                    <span class="compared-price colorBage1 font-14 font-josefin fw-500 ms-2">
+                                                        ${{ number_format($relatedProduct->sale_price, 2) }}
+                                                    </span>
+                                                @else
+                                                    <span class="compared-price colorBage1 font-14 font-josefin fw-500">
+                                                        ${{ number_format($relatedProduct->price, 2) }}
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="product-item fitem">
-                                        <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-2.png" alt="product">
-                                            </a>
-                                            <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
-                                                <li class="product-button">
-                                                    <a href="wishlist.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-heart"></i>
-                                                        <span class="hoverText"> Wishlist </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="compare.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-left-and-right-arrows"> </i>
-                                                        <span class="hoverText"> Compare </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
-                                                        class="buttonLInk radious50">
-                                                        <i class="flaticon-view"></i>
-                                                        <span class="hoverText"> Quick View </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
-                                        </div>
-                                        <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
-                                                <h6 class="product-title font-josefin font-18 fw-600">
-                                                    Sports Shoes
-                                                </h6>
-                                            </a>
-                                            <div
-                                                class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $165.00
-                                                </span>
-                                            </div>
-                                        </div>
+                                    @empty
+                                    <div class="col-12">
+                                        <p class="text-center">No related products found</p>
                                     </div>
-                                    <div class="product-item fitem">
-                                        <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img class="normal-image" src="{{asset('assets/frontend/images/home-6/products-3.png"
-                                                    alt="product">
-                                                <img class="hover-image changeimage"
-                                                    src="{{asset('assets/frontend/images/home-6/products-8.png" alt="product">
-                                            </a>
-                                            <span class="badge bgBlack font-12 font-roboto radious50">
-                                                New
-                                            </span>
-                                            <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
-                                                <li class="product-button">
-                                                    <a href="wishlist.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-heart"></i>
-                                                        <span class="hoverText"> Wishlist </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="compare.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-left-and-right-arrows"> </i>
-                                                        <span class="hoverText"> Compare </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
-                                                        class="buttonLInk radious50">
-                                                        <i class="flaticon-view"></i>
-                                                        <span class="hoverText"> Quick View </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
-                                        </div>
-                                        <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
-                                                <h6 class="product-title font-josefin font-18 fw-600">
-                                                    Trendy stylish shoes
-                                                </h6>
-                                            </a>
-                                            <div
-                                                class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $145.00
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item fitem">
-                                        <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img src="{{asset('assets/frontend/images/home-6/products-4.png" alt="product">
-                                            </a>
-                                            <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
-                                                <li class="product-button">
-                                                    <a href="wishlist.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-heart"></i>
-                                                        <span class="hoverText"> Wishlist </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="compare.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-left-and-right-arrows"> </i>
-                                                        <span class="hoverText"> Compare </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
-                                                        class="buttonLInk radious50">
-                                                        <i class="flaticon-view"></i>
-                                                        <span class="hoverText"> Quick View </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
-                                        </div>
-                                        <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
-                                                <h6 class="product-title font-josefin font-18 fw-600">
-                                                    Casual Shoes
-                                                </h6>
-                                            </a>
-                                            <div
-                                                class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $175.00
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item fitem">
-                                        <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img class="normal-image" src="{{asset('assets/frontend/images/home-6/products-5.png"
-                                                    alt="product">
-                                                <img class="hover-image changeimage"
-                                                    src="{{asset('assets/frontend/images/home-6/products-8.png" alt="product">
-                                            </a>
-                                            <span class="badge bgBage1 font-12 font-roboto radious50">
-                                                Hot
-                                            </span>
-                                            <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
-                                                <li class="product-button">
-                                                    <a href="wishlist.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-heart"></i>
-                                                        <span class="hoverText"> Wishlist </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="compare.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-left-and-right-arrows"> </i>
-                                                        <span class="hoverText"> Compare </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
-                                                        class="buttonLInk radious50">
-                                                        <i class="flaticon-view"></i>
-                                                        <span class="hoverText"> Quick View </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
-                                        </div>
-                                        <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
-                                                <h6 class="product-title font-josefin font-18 fw-600">
-                                                    High Quality Sneakers
-                                                </h6>
-                                            </a>
-                                            <div
-                                                class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $165.00
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item fitem">
-                                        <div class="product-image-wrapper">
-                                            <a class="d-block" href="shop-details-3.html">
-                                                <img class="normal-image" src="{{asset('assets/frontend/images/home-6/products-6.png"
-                                                    alt="product">
-                                                <img class="hover-image changeimage"
-                                                    src="{{asset('assets/frontend/images/home-6/products-13.png" alt="product">
-                                            </a>
-                                            <span class="badge bgBage1 font-12 font-roboto radious50">
-                                                Hot
-                                            </span>
-                                            <ul class="product-button-set topstyle style4 d-lg-inline-flex d-none">
-                                                <li class="product-button">
-                                                    <a href="wishlist.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-heart"></i>
-                                                        <span class="hoverText"> Wishlist </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="compare.html" class="buttonLInk radious50">
-                                                        <i class="flaticon-left-and-right-arrows"> </i>
-                                                        <span class="hoverText"> Compare </span>
-                                                    </a>
-                                                </li>
-                                                <li class="product-button">
-                                                    <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
-                                                        class="buttonLInk radious50">
-                                                        <i class="flaticon-view"></i>
-                                                        <span class="hoverText"> Quick View </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
-                                        </div>
-                                        <div class="product-content mt-2 pt-2 text-center position-relative">
-                                            <p class="font-roboto font-12 fw-400">Men Shoes</p>
-                                            <a class="d-block pt-1" href="shop-details-3.html">
-                                                <h6 class="product-title font-josefin font-18 fw-600">
-                                                    Outdoor Sports Shoes
-                                                </h6>
-                                            </a>
-                                            <div
-                                                class="product-price pt-1 d-flex align-items-center justify-content-center">
-                                                <span class="compared-price colorBage1 font-14 font-josefin fw-500">
-                                                    $165.00
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforelse
                                 </div>
                                 <div class="slick-arrow-container"></div>
                             </div>

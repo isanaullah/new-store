@@ -34,7 +34,9 @@ class WebSettingTableSeeder extends Seeder
           'site_logo' => 'logo.png',
           'site_fav' => 'sitefav.png',
           'site_author' => 'Admin',
+          'site_author_description' => 'Credibly utilize stand-alone expertise for high payoff best practices. Energistically facilitate',
           'theme_footer' => 'Copyright © 2024 All Reserved by',
       ]);
   }
 }
+

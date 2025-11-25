@@ -160,420 +160,25 @@
                                 </h4>
                                 <p class="pt-2 font-14 font-rubik wow fadeInUp animated" data-wow-delay="0.3s"
                                     data-wow-duration="0.4s">
-                                    Fish fruitful were together don't bring replenish dominion so evening.
+                                    Discover our exquisite collection of jewelry pieces crafted with elegance and precision.
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img class="normal-image" src="{{asset('assets/frontend/images/home-7/product-1.png')}}" alt="product">
-                                        <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-7/product-6.png')}}" alt="product">
-                                    </a>
-                                    <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgBage1">
-                                        Hot
-                                    </span>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Woman Pink Purse Isolated
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $20.00
-                                        </span>
-                                    </div>
-                                </div>
+                    <div class="row justify-content-center" id="products-container">
+                        @forelse($products as $product)
+                            @include('partials.product-card', compact('product'))
+                        @empty
+                            <div class="col-12 text-center">
+                                <p class="font-14 font-rubik">No products available</p>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-2.png')}}" alt="product">
-                                    </a>
-                                    <span class="badge bgred badgeRIght radious50 font-12 font-rubik radious2">
-                                        New
-                                    </span>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Man Sports Lastest Shoes
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $359
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img class="normal-image" src="{{asset('assets/frontend/images/home-7/product-3.png')}}" alt="product">
-                                        <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-7/product-8.png')}}" alt="product">
-                                    </a>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Man Blue Cotton Shirt
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $24
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img class="normal-image" src="{{asset('assets/frontend/images/home-7/product-4.png')}}" alt="product">
-                                        <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-7/product-5.png')}}" alt="product">
-                                    </a>
-                                    <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgBlack">
-                                        Sale
-                                    </span>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Man Black Tendy Cap
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $45
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img class="normal-image" src="{{asset('assets/frontend/images/home-7/product-5.png')}}" alt="product">
-                                        <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-7/product-3.png')}}" alt="product">
-                                    </a>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Blue Modern Sunglass
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $22.00
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-6.png')}}" alt="product">
-                                    </a>
-                                    <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgred">
-                                        New
-                                    </span>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Fashion Shoes & Sneakers
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $66.00
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-7.png')}}" alt="product">
-                                    </a>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Man Pink Jacket Isolated
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $121
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-30">
-                            <div class="product-item">
-                                <div class="product-image-wrapper radious5">
-                                    <a class="d-block" href="shop-details-1.html">
-                                        <img class="normal-image" src="{{asset('assets/frontend/images/home-7/product-8.png')}}" alt="product">
-                                        <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-7/product-2.png')}}" alt="product">
-                                    </a>
-                                    <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgBage1">
-                                        -30%
-                                    </span>
-                                    <ul class="product-button-set style4 productBtmMiddle d-lg-inline-flex d-none">
-                                        <li class="product-button">
-                                            <a href="#exampleModalToggle" data-bs-toggle="modal" role="button" class="buttonLInk radious50">
-                                                <i class="flaticon-loupe"></i>
-                                                <span class="hoverText"> Quick View </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="cart.html" class="buttonLInk radious50">
-                                                <i class="flaticon-shopping-bag"></i>
-                                                <span class="hoverText"> Cart </span>
-                                            </a>
-                                        </li>
-                                        <li class="product-button">
-                                            <a href="wishlist.html" class="buttonLInk radious50">
-                                                <i class="flaticon-heart"> </i>
-                                                <span class="hoverText"> Wishlist </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-content mt-3 text-center position-relative">
-                                    <ul class="rating redrat font-12 justify-content-center align-items-center">
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li> <i class="flaticon-star-1"></i> </li>
-                                        <li class="colorGray"> <i class="flaticon-star-1"></i> </li>
-                                    </ul>
-                                    <a class="d-block pt-2 mt-1" href="shop-details-1.html">
-                                        <h6 class="product-title font-poppins hoverRed font-14 fw-500">
-                                            Woman Blue Top Isolated
-                                        </h6>
-                                    </a>
-                                    <div class="product-price d-flex align-items-center justify-content-center">
-                                        <span class="compared-price colorGray font-14 font-rubik fw-400">
-                                            $85
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforelse
                         <div class="col-12 text-center mt-40">
-                            <a class="btn-primary redtransparent font-rubik fw-500 mt-2" href="#0">
-                                <span>LOAD MORE</span>
-                            </a>
+                            @if($products->hasMorePages())
+                                <button class="btn-primary redtransparent font-rubik fw-500 mt-2" id="load-more-btn" data-page="2">
+                                    <span>LOAD MORE</span>
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -592,84 +197,41 @@
                                 </h4>
                                 <p class="pt-2 font-14 font-rubik wow fadeInUp animated" data-wow-delay="0.3s"
                                     data-wow-duration="0.4s">
-                                    Fish fruitful were together don't bring replenish dominion so evening.
+                                    Discover the latest insights and stories about jewelry trends and styling tips.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-                            <div class="blog-three__single hoverScale mt-30 ">
-                                <a href="blog-single.html" class="blog-three__single-img d-block overflow-hidden">
-                                    <img src="{{asset('assets/frontend/images/home-7/blog-1.png')}}" alt="image">
-                                </a>
-                                <div class="blog-three__single-content mt-3">
-                                    <p class="font-12 font-rubik text-uppercase">BY MARTIN / 28 AUGUST, 2021</p>
-                                    <h4 class="lh-1"><a href="blog-single.html" class="font-20 font-poppins hoverRed fw-400">A Perfect
-                                            Style With Our Fashion Shoes</a></h4>
-                                    <ul class="meta mt-2 pt-1 d-flex align-items-center">
-                                        <li class="d-flex align-items-center me-3 pe-2"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-editing"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> Life style
-                                            </span> </li>
-                                        <li class="d-flex align-items-center"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-comment"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> 03 comment
-                                            </span> </li>
-                                    </ul>
+                        @forelse($blogs as $blog)
+                            <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
+                                <div class="blog-three__single hoverScale mt-30 ">
+                                    <a href="{{ route('blog.show', $blog->slug) }}" class="blog-three__single-img d-block overflow-hidden">
+                                        <img src="{{asset('storage/' . $blog->image)}}" alt="{{ $blog->title }}">
+                                    </a>
+                                    <div class="blog-three__single-content mt-3">
+                                        <p class="font-12 font-rubik text-uppercase">BY {{ $setting->site_author ?? 'Admin' }} / {{ $blog->created_at->format('d M, Y') }}</p>
+                                        <h4 class="lh-1"><a href="{{ route('blog.show', $blog->slug) }}" class="font-20 font-poppins hoverRed fw-400">{{ $blog->title }}</a></h4>
+                                        <ul class="meta mt-2 pt-1 d-flex align-items-center">
+                                            <li class="d-flex align-items-center me-3 pe-2"> <span
+                                                    class="colorRed font-12 lh-0 me-1 pe-1"> <i
+                                                        class="flaticon-editing"></i> </span> <span
+                                                    class="font-rubik font-12 text-uppercase colorrBlack"> {{ $blog->category->name ?? 'Blog' }}
+                                                </span> </li>
+                                            <li class="d-flex align-items-center"> <span
+                                                    class="colorRed font-12 lh-0 me-1 pe-1"> <i
+                                                        class="flaticon-comment"></i> </span> <span
+                                                    class="font-rubik font-12 text-uppercase colorrBlack"> 0 comment
+                                                </span> </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-                            <div class="blog-three__single hoverScale mt-30 ">
-                                <a href="blog-single.html" class="blog-three__single-img d-block overflow-hidden">
-                                    <img src="{{asset('assets/frontend/images/home-7/blog-2.png')}}" alt="image">
-                                </a>
-                                <div class="blog-three__single-content mt-3">
-                                    <p class="font-12 font-rubik text-uppercase">BY MARTIN / 28 AUGUST, 2021</p>
-                                    <h4 class="lh-1"><a href="blog-single.html" class="font-20 font-poppins hoverRed fw-400">A Perfect
-                                            Style With Our Fashion Shoes</a></h4>
-                                    <ul class="meta mt-2 pt-1 d-flex align-items-center">
-                                        <li class="d-flex align-items-center me-3 pe-2"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-editing"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> Life style
-                                            </span> </li>
-                                        <li class="d-flex align-items-center"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-comment"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> 03 comment
-                                            </span> </li>
-                                    </ul>
-                                </div>
+                        @empty
+                            <div class="col-12 text-center">
+                                <p class="font-14 font-rubik">No blogs available</p>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-                            <div class="blog-three__single hoverScale mt-30 ">
-                                <a href="blog-single.html" class="blog-three__single-img d-block overflow-hidden">
-                                    <img src="{{asset('assets/frontend/images/home-7/blog-3.png')}}" alt="image">
-                                </a>
-                                <div class="blog-three__single-content mt-3">
-                                    <p class="font-12 font-rubik text-uppercase">BY MARTIN / 28 AUGUST, 2021</p>
-                                    <h4 class="lh-1"><a href="blog-single.html" class="font-20 font-poppins hoverRed fw-400">A Perfect
-                                            Style With Our Fashion Shoes</a></h4>
-                                    <ul class="meta mt-2 pt-1 d-flex align-items-center">
-                                        <li class="d-flex align-items-center me-3 pe-2"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-editing"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> Life style
-                                            </span> </li>
-                                        <li class="d-flex align-items-center"> <span
-                                                class="colorRed font-12 lh-0 me-1 pe-1"> <i
-                                                    class="flaticon-comment"></i> </span> <span
-                                                class="font-rubik font-12 text-uppercase colorrBlack"> 03 comment
-                                            </span> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </section>
@@ -776,3 +338,39 @@
         </div>
         <!-- End Body Container -->
 @include("sitepartials.footer")
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const productsContainer = document.getElementById('products-container');
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            const page = this.getAttribute('data-page');
+            const url = "{{ route('load.more.products') }}?page=" + page;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Insert new products before the load more button
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data.html;
+                    const newProducts = tempDiv.querySelectorAll('.col-lg-3');
+
+                    newProducts.forEach(product => {
+                        productsContainer.insertBefore(product, loadMoreBtn.parentElement);
+                    });
+
+                    // Update page number
+                    if (data.has_more) {
+                        loadMoreBtn.setAttribute('data-page', data.next_page);
+                    } else {
+                        // Hide load more button if no more pages
+                        loadMoreBtn.parentElement.style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error loading products:', error));
+        });
+    }
+});
+</script>

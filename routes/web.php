@@ -50,8 +50,9 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/contact-us', 'contactUs')->name('contact-us');
     Route::get('/about-us', 'aboutUs')->name('about.us');
-    Route::get('/blog-listing', 'blogListing')->name('blog.listing');
     Route::get('/blog-show/{slug}', 'blogShow')->name('blog.show'); // slug-based
+    Route::get('/blog-listing', 'blogListing')->name('blog.listing');
+    Route::get('/blog/category/{categorySlug}', 'blogListing')->name('blog.category');
     Route::get('/product-show/{slug}', 'productShow')->name('product.show'); // slug-based
     Route::get('/product-listing', 'productListing')->name('product.listing');
     Route::get('/privacy-policy', 'privacy')->name('privacypolicy');
@@ -61,6 +62,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/cart', 'cart')->name('cart');
     Route::get('/track-orders', 'trackOrders')->name('track.orders');
     Route::get('/return-policy', 'returnPolicy')->name('return.policy');
+    Route::get('/load-more-products', 'loadMoreProducts')->name('load.more.products');
 });
 
 
