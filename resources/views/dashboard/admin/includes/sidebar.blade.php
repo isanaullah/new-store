@@ -73,6 +73,19 @@
                     <span>Tags</span>
                 </a>
             </li>
+            <!-- Products -->
+            <li class="menu-header">Products</li>
+            <li class="nav-item dropdown {{ request()->routeIs('categories.index', 'products.index') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-shopping-bag"></i>
+                    <span>Products Management</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"
+                            href="{{ route('categories.index') }}">Categories</a></li>
+                    <li><a class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}"
+                            href="{{ route('products.index') }}">Products</a></li>
+                </ul>
+            </li>
             <!-- FAQ's -->
             <li class="menu-header">FAQ's</li>
             <li class="nav-item {{ request()->routeIs('faqs.manage') ? 'active' : '' }}">

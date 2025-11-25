@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
       PageSeeder::class,
       BannerSeeder::class,
       SMTPSettingsSeeder::class,
+      CategorySeeder::class,
+      ProductSeeder::class,
 
     ]);
   }

@@ -22,6 +22,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserEducationController;
 use App\Http\Controllers\PageSectionController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\newcontrolles\CategoryController;
+use App\Http\Controllers\newcontrolles\ProductController;
 
 
 /*
@@ -303,6 +305,24 @@ Route::controller(TagController::class)->group(function () {
     Route::get('/tags/{id}/edit', 'edit')->name('tags.edit')->middleware('checkpermission:edit.sliders');
     Route::put('/tags/{id}', 'update')->name('tags.update')->middleware('checkpermission:update.sliders');
     Route::get('/tags/{id}', 'destroy')->name('tags.destroy')->middleware('checkpermission:destroy.sliders');
+});
+    // Categories
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories/manage', 'index')->name('categories.index')->middleware('checkpermission:view.categories');
+    Route::get('/categories/create', 'create')->name('categories.create')->middleware('checkpermission:create.categories');
+    Route::post('/categories/store', 'store')->name('categories.store')->middleware('checkpermission:store.categories');
+    Route::get('/categories/{id}/edit', 'edit')->name('categories.edit')->middleware('checkpermission:edit.categories');
+    Route::put('/categories/{id}', 'update')->name('categories.update')->middleware('checkpermission:update.categories');
+    Route::get('/categories/{id}', 'destroy')->name('categories.destroy')->middleware('checkpermission:destroy.categories');
+});
+    // Products
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products/manage', 'index')->name('products.index')->middleware('checkpermission:view.products');
+    Route::get('/products/create', 'create')->name('products.create')->middleware('checkpermission:create.products');
+    Route::post('/products/store', 'store')->name('products.store')->middleware('checkpermission:store.products');
+    Route::get('/products/{id}/edit', 'edit')->name('products.edit')->middleware('checkpermission:edit.products');
+    Route::put('/products/{id}', 'update')->name('products.update')->middleware('checkpermission:update.products');
+    Route::get('/products/{id}', 'destroy')->name('products.destroy')->middleware('checkpermission:destroy.products');
 });
     // App setttings
     Route::controller(AppSettingController::class)->group(function () {
