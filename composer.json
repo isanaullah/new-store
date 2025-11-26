@@ -8,6 +8,7 @@
         "php": "^8.2",
         "artesaos/seotools": "^1.3",
         "guzzlehttp/guzzle": "^7.8",
+        "hardevine/shoppingcart": "^3.4",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
