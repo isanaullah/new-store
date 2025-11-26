@@ -24,6 +24,7 @@ use App\Http\Controllers\PageSectionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\newcontrolles\CategoryController;
 use App\Http\Controllers\newcontrolles\ProductController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -63,6 +64,17 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/track-orders', 'trackOrders')->name('track.orders');
     Route::get('/return-policy', 'returnPolicy')->name('return.policy');
     Route::get('/load-more-products', 'loadMoreProducts')->name('load.more.products');
+});
+
+// Cart routes
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'index')->name('cart');
+    Route::post('/cart/add', 'add')->name('cart.add');
+    Route::put('/cart/update', 'update')->name('cart.update');
+    Route::delete('/cart/remove/{rowId}', 'remove')->name('cart.remove');
+    Route::delete('/cart/destroy', 'destroy')->name('cart.destroy');
+    Route::get('/cart/count', 'count')->name('cart.count');
+    Route::get('/cart/subtotal', 'subtotal')->name('cart.subtotal');
 });
 
 

@@ -2,6 +2,20 @@
         <!-- Body Container -->
         <div class="page-content">
 
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <!--Start Shop Details Breadcrumb-->
             <div class="shop-details-breadcrumb wow fadeInUp animated">
                 <div class="container">
@@ -205,10 +219,10 @@
                                 </p>
                                 <div class="d-flex align-items-center">
                                     <div class="qtySelector pdCount me-3 mt-2">
-                                        <span class="decreaseQty"><i class="flaticon-minus-sign"></i>
+                                        <span class="decreaseQty" onclick="updateQuantity(-1)"><i class="flaticon-minus-sign"></i>
                                         </span>
-                                        <input type="text" class="qtyValue p-0 me-2 ms-2 text-center" value="1">
-                                        <span class="increaseQty"> <i class="flaticon-plus-1"></i>
+                                        <input type="text" class="qtyValue p-0 me-2 ms-2 text-center" id="quantity_display" value="1" min="1">
+                                        <span class="increaseQty" onclick="updateQuantity(1)"> <i class="flaticon-plus-1"></i>
                                         </span>
                                     </div>
                                     <p class="font-roboto colorBlack pt-1 lh-1 d-flex align-items-center font-14">
@@ -216,9 +230,14 @@
                                         <span>Only 10 Left !</span>
                                     </p>
                                 </div>
-                                <button class="btn--primary mt-3 style2 w-100">
-                                    Add To Cart
-                                </button>
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1" id="product_quantity">
+                                    <button type="submit" class="btn--primary mt-3 style2 w-100">
+                                        Add To Cart
+                                    </button>
+                                </form>
                                 <button class="btn--primary mt-3 w-100">
                                     Buy It Now
                                 </button>
@@ -747,10 +766,15 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                            <button
-                                                class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
-                                                Add To Cart
-                                            </button>
+                                            <form action="{{ route('cart.add') }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+                                                <input type="hidden" name="quantity" value="1">
+                                                <button type="submit"
+                                                    class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
+                                                    Add To Cart
+                                                </button>
+                                            </form>
                                         </div>
                                         <div class="product-content mt-2 pt-2 text-center position-relative">
                                             <p class="font-roboto font-12 fw-400">{{ $relatedProduct->category->name ?? 'Product' }}</p>
@@ -869,4 +893,27 @@
 
         </div>
         <!-- End Body Container -->
+
+<script>
+function updateQuantity(change) {
+    const qtyInput = document.getElementById('quantity_display');
+    const hiddenQtyInput = document.getElementById('product_quantity');
+    let currentValue = parseInt(qtyInput.value) || 1;
+    let newValue = currentValue + change;
+
+    if (newValue < 1) newValue = 1;
+
+    qtyInput.value = newValue;
+    hiddenQtyInput.value = newValue;
+}
+
+// Update hidden field when display field changes manually
+document.getElementById('quantity_display').addEventListener('input', function() {
+    const hiddenQtyInput = document.getElementById('product_quantity');
+    let value = parseInt(this.value) || 1;
+    if (value < 1) value = 1;
+    this.value = value;
+    hiddenQtyInput.value = value;
+});
+</script>
 @include("sitepartials.footer")

@@ -2,8 +2,8 @@
     <div class="product-item">
         <div class="product-image-wrapper radious5">
             <a class="d-block" href="{{ route('product.show', $product->slug) }}">
-                <img class="normal-image" src="{{ asset('assets/frontend/images/home-6/products-11.png') }}" alt="{{ $product->title }}">
-                <img class="hover-image changeimage" src="{{ asset('assets/frontend/images/home-6/products-11.png') }}" alt="{{ $product->title }}">
+                <img class="normal-image" src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('assets/images/placeholder.png') }}" alt="{{ $product->title }}">
+                <img class="hover-image changeimage" src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('assets/images/placeholder.png') }}" alt="{{ $product->title }}">
             </a>
             @if($product->sale_price)
                 <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgBage1">
@@ -22,10 +22,15 @@
                     </a>
                 </li>
                 <li class="product-button">
-                    <a href="{{ route('cart') }}" class="buttonLInk radious50">
-                        <i class="flaticon-shopping-bag"></i>
-                        <span class="hoverText"> Cart </span>
-                    </a>
+                    <form action="{{ route('cart.add') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="buttonLInk radious50" style="background: none; border: none; padding: 0;">
+                            <i class="flaticon-shopping-bag"></i>
+                            <span class="hoverText"> Add to Cart </span>
+                        </button>
+                    </form>
                 </li>
                 <li class="product-button">
                     <a href="{{ route('cart') }}" class="buttonLInk radious50">

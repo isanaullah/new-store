@@ -3,6 +3,20 @@
         <!-- Body Container -->
         <div class="page-content overflow-hidden">
 
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <!--Start Breadcrumb Style2-->
             <section class="breadcrumb-area" style="background-image: url(assets/images/innerpage/breadcum-bg.png);">
                 <div class="container">
@@ -145,10 +159,15 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <button
+                                    <form action="{{ route('cart.add') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit"
                                         class="btn-primary addBtn d-flex align-items-center justify-content-center text-uppercase font-14 fw-500">
                                         Add To Cart
                                     </button>
+                                </form>
                                 </div>
                                 <div class="product-content mt-2 pt-2 text-center position-relative">
                                     <p class="font-roboto font-12 fw-400">{{ $product->category->name ?? 'Product' }}</p>

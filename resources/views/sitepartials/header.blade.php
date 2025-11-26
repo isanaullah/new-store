@@ -137,7 +137,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="cart.html" class="micon ps-3 color-white">
+                                        <a href="{{route('cart')}}" class="micon ps-3 color-white">
                                             <span>
                                                 <i class="flaticon-shopping-cart"> </i>
                                             </span>
@@ -169,7 +169,7 @@
                                             <li><a class="dropdown-item lineAfterBlack" href="{{route('login')}}"> <span>Login </span> </a> </li>
                                             <li><a class="dropdown-item lineAfterBlack" href="{{route('register')}}">
                                                     <span>Registration</span> </a> </li>
-                                            <li><a class="dropdown-item lineAfterBlack" href="{{route('about.us')}}">
+                                            <li><a class="dropdown-item lineAfterBlack" href="{{route('cart')}}">
                                                     <span>Cart</span> </a> </li>
                                             <li><a class="dropdown-item lineAfterBlack" href="">
                                                         <span>faq</span> </a> </li>
@@ -254,7 +254,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="cart.html" class="micon ps-3 colorrBlack">
+                                        <a href="{{route('cart')}}" class="micon ps-3 colorrBlack">
                                             <span>
                                                 <i class="flaticon-shopping-cart"> </i>
                                             </span>
@@ -289,7 +289,7 @@
                                                     </span> </a> </li>
                                             <li><a class="dropdown-item font-rubik lineAfterBlack" href="register.html">
                                                     <span>Registration</span> </a> </li>
-                                            <li><a class="dropdown-item font-rubik lineAfterBlack" href="cart.html">
+                                            <li><a class="dropdown-item font-rubik lineAfterBlack" href="{{route('cart')}}">
                                                     <span>Cart</span> </a> </li>
                                             <li><a class="dropdown-item font-rubik lineAfterBlack" href="faq.html">
                                                         <span>faq</span> </a> </li>

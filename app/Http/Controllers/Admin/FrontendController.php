@@ -1087,4 +1087,17 @@ public function blogshow(BlogArticle $articleArticle, $slug)
 
         return view('website.track-orders', compact('page', 'setting', 'schemaMarkup'));
     }
+
+    /**
+     * Display the cart page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function cart()
+    {
+        $page = ['page_name' => 'Shopping Cart'];
+        $setting = WebSetting::first();
+
+        return view('website.cart', compact('page', 'setting'));
+    }
 }
