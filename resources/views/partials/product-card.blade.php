@@ -2,8 +2,8 @@
     <div class="product-item">
         <div class="product-image-wrapper radious5">
             <a class="d-block" href="{{ route('product.show', $product->slug) }}">
-                <img class="normal-image" src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('assets/images/placeholder.png') }}" alt="{{ $product->title }}">
-                <img class="hover-image changeimage" src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('assets/images/placeholder.png') }}" alt="{{ $product->title }}">
+                <img class="normal-image" src="{{asset('assets/frontend/images/home-6/products-2.png')}}" alt="{{ $product->title }}">
+                <img class="hover-image changeimage" src="{{asset('assets/frontend/images/home-6/products-2.png')}}" alt="{{ $product->title }}">
             </a>
             @if($product->sale_price)
                 <span class="badge badgeRIght radious50 font-12 font-rubik radious2 bgBage1">

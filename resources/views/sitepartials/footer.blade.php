@@ -515,9 +515,12 @@
         </div>
 
         <!-- Cart Offcanvas Start -->
+        @php
+            use Gloudemans\Shoppingcart\Facades\Cart;
+        @endphp
         <div class="offcanvas offcanvascart p-4 pt-3 offcanvas-end" tabindex="-1" id="offcanvasRight2">
             <div class="offcanvas-header d-flex justify-content-between align-content-center">
-                <h6 class="text-uppercase font-josefin colorrBlack fw-500">Your Cart (03)</h6>
+                <h6 class="text-uppercase font-josefin colorrBlack fw-500">Your Cart ({{ Cart::count() }})</h6>
                 <button type="button" class="btn-close p-0 animationCloser" data-bs-dismiss="offcanvas"
                     aria-label="Close">
                     <span class="span1 animationLine"> </span>
@@ -528,78 +531,40 @@
                 <div class="side-cart h-100 d-flex flex-column justify-content-between">
                     <div class="top">
                         <div class="cart_items">
-                            <div class="items d-flex justify-content-between align-items-center">
-                                <div class="left d-flex align-items-center">
-                                    <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-1.png')}}" alt="">
-                                    </a>
-                                    <div class="text">
-                                        <a href="shop-details-1.html">
-                                            <h6 class="colorrBlack font-josefin fw-500">Woman Pink Purse Isolated</h6>
-                                        </a>
-                                        <p>2 X <span>$350.00</span> </p>
+                            @if(Cart::count() > 0)
+                                @foreach(Cart::content() as $item)
+                                    <div class="items d-flex justify-content-between align-items-center">
+                                        <div class="left d-flex align-items-center">
+                                            <a href="{{ route('product.show', $item->options->slug) }}" class="thumb d-flex justify-content-between align-items-center">
+                                                <img src="{{ $item->options->image ? asset('storage/' . $item->options->image) : asset('assets/images/placeholder.png') }}" alt="{{ $item->name }}">
+                                            </a>
+                                            <div class="text">
+                                                <a href="{{ route('product.show', $item->options->slug) }}">
+                                                    <h6 class="colorrBlack font-josefin fw-500">{{ $item->name }}</h6>
+                                                </a>
+                                                <p>{{ $item->qty }} X <span>${{ number_format($item->price, 2) }}</span> </p>
+                                            </div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="item-remove" onclick="removeFromCartOffcanvas('{{ $item->rowId }}')"> <i class="flaticon-cross"></i> </div>
+                                        </div>
                                     </div>
+                                @endforeach
+                            @else
+                                <div class="text-center py-4">
+                                    <p class="text-muted">Your cart is empty</p>
                                 </div>
-                                <div class="right">
-                                    <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                                </div>
-                            </div>
-                            <div class="items d-flex justify-content-between align-items-center">
-                                <div class="left d-flex align-items-center">
-                                    <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-2.png')}}" alt="">
-                                    </a>
-                                    <div class="text"> <a href="shop-details-1.html">
-                                            <h6 class="colorrBlack font-josefin fw-500"> Man Sports Lastest Shoes </h6>
-                                        </a>
-                                        <p>1 X <span>$150.00</span> </p>
-                                    </div>
-                                </div>
-                                <div class="right">
-                                    <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                                </div>
-                            </div>
-                            <div class="items d-flex justify-content-between align-items-center">
-                                <div class="left d-flex align-items-center">
-                                    <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-3.png')}}" alt="">
-                                    </a>
-                                    <div class="text"> <a href="shop-details-1.html">
-                                            <h6 class="colorrBlack font-josefin fw-500"> Man Blue Cotton Shirt</h6>
-                                        </a>
-                                        <p>1 X <span>$200.00</span> </p>
-                                    </div>
-                                </div>
-                                <div class="right">
-                                    <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                                </div>
-                            </div>
-                            <div class="items d-flex justify-content-between align-items-center">
-                                <div class="left d-flex align-items-center">
-                                    <a href="shop-details-1.html"
-                                        class="thumb d-flex justify-content-between align-items-center">
-                                        <img src="{{asset('assets/frontend/images/home-7/product-4.png')}}" alt="">
-                                    </a>
-                                    <div class="text"> <a href="shop-details-1.html">
-                                            <h6 class="colorrBlack font-josefin fw-500"> Man Black Tendy Cap</h6>
-                                        </a>
-                                        <p>1 X <span>$150.00</span> </p>
-                                    </div>
-                                </div>
-                                <div class="right">
-                                    <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="bottom">
                         <div class="total-ammount d-flex justify-content-between align-items-center">
                             <h6 class="text-uppercase colorrBlack font-josefin fw-500">Total:</h6>
-                            <h6 class="ammount text-uppercase colorrBlack font-josefin fw-500">$850.00</h6>
+                            <h6 class="ammount text-uppercase colorrBlack font-josefin fw-500">${{ number_format((float) Cart::total(), 2) }}</h6>
                         </div>
                         <div class="button-box d-flex justify-content-between">
-                            <a href="cart.html" class="btn_black"> View Cart </a>
-                            <a href="cart.html" class="button-2 btn_theme"> Chekout </a>
+                            <a href="{{ route('cart') }}" class="btn_black"> View Cart </a>
+                            <a href="#" class="button-2 btn_theme"> Chekout </a>
                         </div>
                     </div>
                 </div>
@@ -608,7 +573,7 @@
 
 
         <!-- Windows onload Newsletter Modal Start -->
-        <div class="modal fade newsletter-modal" id="newsletter-modal" aria-hidden="true" tabindex="-1">
+        {{-- <div class="modal fade newsletter-modal" id="newsletter-modal" aria-hidden="true" tabindex="-1">
             <div
                 class="modal-dialog height100vh mt-auto ms-lg-auto m-auto me-lg-0 mb-lg-0 pe-lg-4 pb-lg-4 p-3 modal-dialog-centered align-items-lg-end align-items-center">
                 <div class="modal-content newsletterModalBox position-relative p-lg-5 pt-lg-3 p-4 pt-3 border-0">
@@ -636,7 +601,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Windows onload Newsletter Modal End -->
 
         <!--===scroll bottom to top===-->
@@ -666,6 +631,31 @@
         <script src="{{asset('assets/frontend/js/plugin/wow.v1.3.0.min.js')}}"></script>
         <!-- Main js -->
         <script src="{{asset('assets/frontend/js/main.js')}}"></script>
+
+        <script>
+        function removeFromCartOffcanvas(rowId) {
+            if (confirm('Are you sure you want to remove this item?')) {
+                fetch(`/cart/remove/${rowId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.message || 'Error removing item');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error removing item');
+                });
+            }
+        }
+        </script>
 
     </div>
     <!-- Page-wrapper End -->

@@ -145,12 +145,12 @@
                                                 <span class="hoverText"> Wishlist </span>
                                             </a>
                                         </li>
-                                        <li class="product-button">
+                                        {{-- <li class="product-button">
                                             <a href="compare.html" class="buttonLInk radious50">
                                                 <i class="flaticon-left-and-right-arrows"> </i>
                                                 <span class="hoverText"> Compare </span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li class="product-button">
                                             <a href="#exampleModalToggle" data-bs-toggle="modal" role="button"
                                                 class="buttonLInk radious50">

@@ -11,6 +11,7 @@ use App\Models\WebSetting;
 use App\Models\BlogArticle;
 use App\Models\Category;
 use App\Models\Article;
+use App\Models\Banner;
 use App\Models\BlogCategory;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -33,8 +34,9 @@ class FrontendController extends Controller
         $categories = Category::where('status', 1)->get();
         $products = Product::paginate(8);
         $setting = WebSetting::first();
+        $banner = Banner::get();
         $blogs = BlogArticle::where('status', 1)->orderBy('created_at', 'desc')->take(3)->get();
-        return view("website.index", compact('page', 'categories', 'products', 'blogs', 'setting'));
+        return view("website.index", compact('page', 'categories', 'products', 'blogs', 'setting', 'banner'));
     }
 
     /**

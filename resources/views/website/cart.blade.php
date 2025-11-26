@@ -133,7 +133,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
                                     <thead class="cart-header clearfix">
                                         <tr>
                                             <th colspan="1" class="shipping-title font-roboto">Shipping</th>
-                                            <th class="price font-roboto">${{ number_format(Cart::subtotal(), 2) }}</th>
+                                            <th class="price font-roboto">${{ number_format((float) Cart::total(), 2) }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -166,7 +166,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
                                             <td>
                                                 <h4 class="total font-roboto">Total</h4>
                                             </td>
-                                            <td class="subtotal">${{ number_format(Cart::total(), 2) }}</td>
+                                            <td class="subtotal">${{ number_format((float) Cart::total(), 2) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -182,7 +182,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
                                         <p>Subtotal</p>
                                     </div>
                                     <div class="right">
-                                        <p>${{ number_format(Cart::subtotal(), 2) }}</p>
+                                        <p>${{ number_format((float) Cart::total(), 2) }}</p>
                                     </div>
                                 </li>
                                 <li>
@@ -198,7 +198,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
                                         <p>Total Price:</p>
                                     </div>
                                     <div class="right">
-                                        <p>${{ number_format(Cart::total(), 2) }}</p>
+                                        <p>${{ number_format((float) Cart::total(), 2) }}</p>
                                     </div>
                                 </li>
                             </ul>

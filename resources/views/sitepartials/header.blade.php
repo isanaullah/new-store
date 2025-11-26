@@ -36,11 +36,15 @@
     <!-- <div id="pre-loader"><img src="{{asset('assets/frontend/images/logo/loader.gif')}}" alt="Loading..." /> </div> -->
     <!-- End Page Loader -->
 
+    @php
+        use Gloudemans\Shoppingcart\Facades\Cart;
+    @endphp
+
     <!-- Page-wrapper Start -->
     <div class="page-wrapper overflow-x">
 
         <!-- Anouncement Start -->
-        <div class="anouncement-bar bgBlack">
+        {{-- <div class="anouncement-bar bgBlack">
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-lg-between justify-content-center align-items-center">
@@ -99,7 +103,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Anouncement End -->
 
         <!-- Header-default Start -->
@@ -137,9 +141,14 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('cart')}}" class="micon ps-3 color-white">
+                                        <a href="{{route('cart')}}" class="micon ps-3 color-white position-relative">
                                             <span>
                                                 <i class="flaticon-shopping-cart"> </i>
+                                                @if(Cart::count() > 0)
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 2px 6px;">
+                                                        {{ Cart::count() }}
+                                                    </span>
+                                                @endif
                                             </span>
                                         </a>
                                     </li>
@@ -254,9 +263,14 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('cart')}}" class="micon ps-3 colorrBlack">
+                                        <a href="{{route('cart')}}" class="micon ps-3 colorrBlack position-relative">
                                             <span>
                                                 <i class="flaticon-shopping-cart"> </i>
+                                                @if(Cart::count() > 0)
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 2px 6px;">
+                                                        {{ Cart::count() }}
+                                                    </span>
+                                                @endif
                                             </span>
                                         </a>
                                     </li>
@@ -293,20 +307,6 @@
                                                     <span>Cart</span> </a> </li>
                                             <li><a class="dropdown-item font-rubik lineAfterBlack" href="faq.html">
                                                         <span>faq</span> </a> </li>
-                                            <li class="has-sub-menu">
-                                                <a class="dropdown-item font-rubik lineAfterBlack" href="#0"> <span>Product
-                                                        Details</span> <span class="ps-1"> <i
-                                                            class="flaticon-next-1"></i></span>
-                                                </a>
-                                                <ul class="sub-menu bgWhite">
-                                                    <li><a href="shop-details-1.html" class="sub-menu-item font-rubik lineAfterBlack"> Product
-                                                            Details 01</a> </li>
-                                                    <li><a href="shop-details-2.html" class="sub-menu-item font-rubik lineAfterBlack"> Product
-                                                            Details 02</a></li>
-                                                    <li><a href="shop-details-3.html" class="sub-menu-item font-rubik lineAfterBlack"> Product
-                                                            Details 03</a></li>
-                                                </ul>
-                                            </li>
                                             <li><a class="dropdown-item font-rubik lineAfterBlack" href="compare.html">
                                                     <span>Compare </span> </a> </li>
                                             <li><a class="dropdown-item font-rubik lineAfterBlack" href="error.html">

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
@@ -7,123 +8,110 @@ use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
+    // Show all banners
     public function index()
     {
         $banners = Banner::all();
         return view('dashboard.admin.banners.index', compact('banners'));
     }
 
+    // Create form
     public function create()
     {
         return view('dashboard.admin.banners.create');
     }
 
+    // Store new banner
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'meta_desc' => 'required|string',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'title'      => 'required|string|max:255',
+            'meta_desc'  => 'required|string',
+            'image'      => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+
+        // Upload image
         if ($request->hasFile('image')) {
-            // Save image to folder
-            $loc = '/public/blog/banners';
-            $fileData = $request->file('image');
-            $fileNameToStore = 'blog/banners/' . $this->uploadImage($fileData, $loc);
-          } else {
-            $fileNameToStore = 'blog/banners/no_img.jpg';
-          }
+            $fileName = $this->uploadImage($request->file('image'), 'public/blog/banners');
+            $imagePath = 'blog/banners/' . $fileName;
+        } else {
+            $imagePath = 'blog/banners/no_img.jpg';
+        }
 
         Banner::create([
-            'title' => $request->title,
+            'title'     => $request->title,
             'meta_desc' => $request->meta_desc,
-            'image'       => $fileNameToStore,
-
+            'image'     => $imagePath,
         ]);
 
-        return redirect()->route('banners.manage')->with('success', 'Banner Created successfully.');
+        return redirect()->route('banners.manage')
+            ->with('success', 'Banner Created Successfully.');
     }
 
-    public function edit(Banner $banners, $id)
+    // Edit page
+    public function edit($id)
     {
-      // Get single blog category details
-      $banner = Banner::where('id', $id)->first();
-
-      return view('dashboard.admin.banners.edit', ['banner' => $banner]);
+        $banner = Banner::findOrFail($id);
+        return view('dashboard.admin.banners.edit', compact('banner'));
     }
 
-    public function update(Request $request, Banner $banners, $id)
-  {
-    // Validate data
-    $this->validate($request, [
-      'title'  => 'required|string',
-      'image'  => 'image|mimes:jpeg,png,jpg,gif,svg',
-    ]);
-
-    if ($request->hasFile('image')) {
-      // Save image to folder
-      $loc = '/public/blog/banners';
-      $fileData = $request->file('image');
-      $fileNameToStore = 'blog/banners/' . $this->uploadImage($fileData, $loc);
-      $fileData = [
-        'image' => $fileNameToStore
-      ];
-
-      // Delete previous file
-      $banner = $banners->select('id', 'image')->where('id', $id)->first();
-      Storage::delete('public/' . $banner->image);
-    }
-
-    $data = [
-      'title'       => $request->title,
-      'meta_desc'   => $request->meta_desc,
-    ];
-
-    // Merge all data arrays
-    if ($request->hasFile('image')) {
-      $data = array_merge($fileData, $data);
-    }
-
-    // Update data into db
-    $banner = $banners->where('id', $id)->update($data);
-
-    if ($banner) {
-      return redirect()->route('banners.manage')->with('success', 'Banner Updated successfully.');
-    } else {
-      return redirect()->route('banners.update')->with('error', 'Sorry something went wrong!');
-    }
-  }
-
-  public function destroy(Banner $banners, $id)
-  {
-    // delete category image
-   $banner = $banners->where('id', $id)->first();
-    if ($banner->image != 'blog/banners/no_img.jpg') {
-      Storage::delete('public/' .$banner->image);
-    }
-
-    //Delete user data
-   $banner = $banners->destroy($id);
-
-    if ($banner) {
-      return redirect()->route('banners.manage')->with('success', 'Banner Deleted Successfully.');
-    } else {
-      return redirect()->route('banners.manage')->with('error', "Sorry something went wrong!");
-    }
-  }
-    public function uploadImage($fileData, $loc)
+    // Update banner
+    public function update(Request $request, $id)
     {
-      // Get file name with extension
-      $fileNameWithExt = $fileData->getClientOriginalName();
-      // Get just file name
-      $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-      // Get just extension
-      $fileExtension = $fileData->extension();
-      // File name to store
-      $fileNameToStore = time() . '.' . $fileExtension;
-      // Finally Upload Image
-      $fileData->storeAs($loc, $fileNameToStore);
+        $request->validate([
+            'title'     => 'required|string|max:255',
+            'meta_desc' => 'required|string',
+            'image'     => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
 
-      return $fileNameToStore;
+        $banner = Banner::findOrFail($id);
+
+        $data = [
+            'title'     => $request->title,
+            'meta_desc' => $request->meta_desc,
+        ];
+
+        // If new image uploaded
+        if ($request->hasFile('image')) {
+
+            // Delete old image
+            if ($banner->image != 'blog/banners/no_img.jpg') {
+                Storage::delete('public/' . $banner->image);
+            }
+
+            // Upload new image
+            $fileName = $this->uploadImage($request->file('image'), 'public/blog/banners');
+            $data['image'] = 'blog/banners/' . $fileName;
+        }
+
+        $banner->update($data);
+
+        return redirect()->route('banners.manage')
+            ->with('success', 'Banner Updated Successfully.');
+    }
+
+    // Delete banner
+    public function destroy($id)
+    {
+        $banner = Banner::findOrFail($id);
+
+        // Delete image
+        if ($banner->image != 'blog/banners/no_img.jpg') {
+            Storage::delete('public/' . $banner->image);
+        }
+
+        // Delete banner record
+        $banner->delete();
+
+        return redirect()->route('banners.manage')
+            ->with('success', 'Banner Deleted Successfully.');
+    }
+
+    // Upload function
+    private function uploadImage($file, $path)
+    {
+        $fileName = time() . '.' . $file->extension();
+        $file->storeAs($path, $fileName);
+        return $fileName;
     }
 }

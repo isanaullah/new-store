@@ -16,28 +16,65 @@
                         }
                         ]}'>
 
-                        <div class="slider-item">
-                            <div class="common-contentBox overlayBlack">
-                                <img class="w-100  heightr100" src="{{asset('assets/frontend/images/home-7/banner-1.png')}}" alt="image">
-                                <div class="absolute-content d-flex align-items-center">
-                                    <div class="container">
-                                        <div class="row h-100 align-items-start justify-content-center">
-                                            <div class="col-lg-6 col-md-9">
-                                                <div class="wrap-content-in">
-                                                    <div class="wrap-caption text-center mt-4 px-2">
-                                                        <h6 class="text-uppercase color-white fw-600 font-poppins wow style2 fadeInUp"
-                                                            data-wow-delay="0.2s" data-wow-duration="0.4s">
-                                                            New fashion trend
-                                                        </h6>
-                                                        <h2 class="mega-title2 text-uppercase pt-1 mt-1 fw-600 color-white animation font-poppins style2 wow animated fadeInUp"
-                                                            data-wow-delay="0.2s" data-wow-duration="0.4s">
-                                                            Premium Fashion
-                                                        </h2>
-                                                        <div class="ss-btnWrap pt-3 mt-1 animation style2 wow animated fadeInUp"
-                                                            data-wow-delay="0.4s" data-wow-duration="0.4s">
-                                                            <a class="btn-primary redstyle border-0 mt-2" href="shop-grid.html">
-                                                                <span>explore now</span>
-                                                            </a>
+                        @if($banner->count() > 0)
+                            @foreach($banner as $bannerItem)
+                                <div class="slider-item">
+                                    <div class="common-contentBox overlayBlack">
+                                        <img class="w-100  heightr100" src="{{asset('storage/'.$bannerItem->image)}}" alt="{{ $bannerItem->title }}">
+                                        <div class="absolute-content d-flex align-items-center">
+                                            <div class="container">
+                                                <div class="row h-100 align-items-start justify-content-center">
+                                                    <div class="col-lg-6 col-md-9">
+                                                        <div class="wrap-content-in">
+                                                            <div class="wrap-caption text-center mt-4 px-2">
+                                                                <h6 class="text-uppercase color-white fw-600 font-poppins wow style2 fadeInUp"
+                                                                    data-wow-delay="0.2s" data-wow-duration="0.4s">
+                                                                    {{ $bannerItem->meta_desc ?? 'New fashion trend' }}
+                                                                </h6>
+                                                                <h2 class="mega-title2 text-uppercase pt-1 mt-1 fw-600 color-white animation font-poppins style2 wow animated fadeInUp"
+                                                                    data-wow-delay="0.2s" data-wow-duration="0.4s">
+                                                                    {{ $bannerItem->title }}
+                                                                </h2>
+                                                                <div class="ss-btnWrap pt-3 mt-1 animation style2 wow animated fadeInUp"
+                                                                    data-wow-delay="0.4s" data-wow-duration="0.4s">
+                                                                    <a class="btn-primary redstyle border-0 mt-2" href="{{route('product.listing')}}">
+                                                                        <span>explore now</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <!-- Fallback banner if no banners in database -->
+                            <div class="slider-item">
+                                <div class="common-contentBox overlayBlack">
+                                    <img class="w-100  heightr100" src="{{asset('assets/frontend/images/home-7/banner-1.png')}}" alt="Default Banner">
+                                    <div class="absolute-content d-flex align-items-center">
+                                        <div class="container">
+                                            <div class="row h-100 align-items-start justify-content-center">
+                                                <div class="col-lg-6 col-md-9">
+                                                    <div class="wrap-content-in">
+                                                        <div class="wrap-caption text-center mt-4 px-2">
+                                                            <h6 class="text-uppercase color-white fw-600 font-poppins wow style2 fadeInUp"
+                                                                data-wow-delay="0.2s" data-wow-duration="0.4s">
+                                                                New fashion trend
+                                                            </h6>
+                                                            <h2 class="mega-title2 text-uppercase pt-1 mt-1 fw-600 color-white animation font-poppins style2 wow animated fadeInUp"
+                                                                data-wow-delay="0.2s" data-wow-duration="0.4s">
+                                                                Premium Fashion
+                                                            </h2>
+                                                            <div class="ss-btnWrap pt-3 mt-1 animation style2 wow animated fadeInUp"
+                                                                data-wow-delay="0.4s" data-wow-duration="0.4s">
+                                                                <a class="btn-primary redstyle border-0 mt-2" href="{{route('product.listing')}}">
+                                                                    <span>explore now</span>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -46,38 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="slider-item">
-                            <div class="common-contentBox overlayBlack">
-                                <img class="w-100 heightr100" src="{{asset('assets/frontend/images/home-7/banner-2.png')}}" alt="image">
-                                <div class="absolute-content d-flex align-items-center">
-                                    <div class="container">
-                                        <div class="row h-100 align-items-start justify-content-center">
-                                            <div class="col-lg-6 col-md-9">
-                                                <div class="wrap-content-in">
-                                                    <div class="wrap-caption text-center mt-4 px-2">
-                                                        <h6 class="text-uppercase color-white fw-600 font-poppins wow style2 fadeInUp"
-                                                            data-wow-delay="0.2s" data-wow-duration="0.4s">
-                                                            New fashion trend
-                                                        </h6>
-                                                        <h2 class="mega-title2 text-uppercase pt-1 mt-1 fw-600 color-white animation font-poppins style2 wow animated fadeInUp"
-                                                            data-wow-delay="0.2s" data-wow-duration="0.4s">
-                                                            Premium Fashion
-                                                        </h2>
-                                                        <div class="ss-btnWrap pt-3 mt-1 animation style2 wow animated fadeInUp"
-                                                            data-wow-delay="0.4s" data-wow-duration="0.4s">
-                                                            <a class="btn-primary redstyle border-0 mt-2" href="shop-grid.html">
-                                                                <span>explore now</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
 
                     </div>
                     <div class="slick-arrow-container"></div>
